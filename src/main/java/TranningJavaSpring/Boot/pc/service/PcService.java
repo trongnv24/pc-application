@@ -5,4 +5,6 @@ import TranningJavaSpring.Boot.pc.dto.response.PcResponse;
 
 public interface PcService {
     PcResponse create(PcRequest request);
+
+    PcResponse getById(String id);
 }

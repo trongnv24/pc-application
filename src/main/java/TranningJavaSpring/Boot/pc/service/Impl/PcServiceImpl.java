@@ -8,6 +8,8 @@ import TranningJavaSpring.Boot.pc.service.PcService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import static TranningJavaSpring.Boot.pc.service.mapping.PcMapping.convertDtoToPcEntity;
 import static TranningJavaSpring.Boot.pc.service.mapping.PcMapping.convertEntityToPcRespoNse;
 
@@ -29,4 +31,17 @@ public class PcServiceImpl implements PcService {
             log.info(" === Finish api create new pc, Pc id {} : === ", response.getId());
             return response;
         }
+    @Override
+    public PcResponse getById(String id) {
+        log.info(" === Start api getById pc === ");
+        log.info(" === String id {}: === ", id);
+        Optional<PcEntity> optionalPcEntity = pcRepository.findById(id);
+        if (!optionalPcEntity.isPresent()){
+            throw new RuntimeException();
+        }
+        PcEntity pcEntity = optionalPcEntity.get();
+        PcResponse response = convertEntityToPcRespoNse(pcEntity);
+        log.info(" === Finish api getById pc, Pc id {}: === ", response.getId());
+        return response;
+    }
     }

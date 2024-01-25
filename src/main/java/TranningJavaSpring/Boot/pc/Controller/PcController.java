@@ -25,4 +25,13 @@ public class PcController {
         log.info(" === Finish api create new pc, Pc id {} : === ",response.getId());
         return response;
     }
+    @GetMapping("{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public PcResponse getById(@PathVariable("id") String id){
+        log.info(" === Start api getById pc === ");
+        log.info(" === String id {} :", id);
+        PcResponse response = service.getById(id);
+        log.info(" === Finish api getById pc, Pc id {} :", response.getId());
+        return response;
+    }
 }
