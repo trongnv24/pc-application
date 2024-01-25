@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.concurrent.BlockingDeque;
 
 import static TranningJavaSpring.Boot.pc.service.mapping.PcMapping.convertDtoToPcEntity;
 import static TranningJavaSpring.Boot.pc.service.mapping.PcMapping.convertEntityToPcRespoNse;
@@ -42,6 +43,25 @@ public class PcServiceImpl implements PcService {
         PcEntity pcEntity = optionalPcEntity.get();
         PcResponse response = convertEntityToPcRespoNse(pcEntity);
         log.info(" === Finish api getById pc, Pc id {}: === ", response.getId());
+        return response;
+    }
+    @Override
+    public PcResponse update (PcRequest request, String id ){
+        log.info(" === Start api update pc === ");
+        log.info(" === Request Body {} :, String id {} :", request , id);
+        Optional<PcEntity>optionalPcEntity = pcRepository.findById(id);
+        if(!optionalPcEntity.isPresent()){
+            throw new RuntimeException();
+        }
+        PcEntity pcEntity = optionalPcEntity.get();
+        pcEntity.setName(request.getName());
+        pcEntity.setProcessor(request.getProcessor());
+        pcEntity.setOperatingSystem(request.getOperatingSystem());
+        pcEntity.setProcessor(request.getProcessor());
+        pcEntity.setRamSize(request.getRamSize());
+        pcEntity = pcRepository.save(pcEntity);
+        PcResponse response = convertEntityToPcRespoNse(pcEntity);
+        log.info(" === Finish api update pc, Pc id {} : ===", response.getId());
         return response;
     }
     }

@@ -7,4 +7,6 @@ public interface PcService {
     PcResponse create(PcRequest request);
 
     PcResponse getById(String id);
+
+    PcResponse update(PcRequest request, String id);
 }
